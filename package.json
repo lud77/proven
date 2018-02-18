@@ -7,5 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Stefano Butera <stefano.butera@nethnic.com> (https://github.com/lud77)",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^2.14.1"
+  }
 }
