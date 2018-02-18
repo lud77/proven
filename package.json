@@ -9,6 +9,7 @@
   "author": "Stefano Butera <stefano.butera@nethnic.com> (https://github.com/lud77)",
   "license": "ISC",
   "dependencies": {
+    "bluebird": "^3.5.1",
     "commander": "^2.14.1"
   }
 }
