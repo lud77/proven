@@ -12,5 +12,8 @@
     "bluebird": "^3.5.1",
     "commander": "^2.14.1",
     "ramda": "^0.25.0"
+  },
+  "bin": {
+    "proven": "./bin/proven.js"
   }
 }
