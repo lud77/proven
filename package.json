@@ -1,13 +1,13 @@
 {
   "name": "proven",
   "version": "1.0.0",
-  "description": "",
+  "description": "CLI tool to enforce quality policies on modules in your project",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Stefano Butera <stefano.butera@nethnic.com> (https://github.com/lud77)",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "bluebird": "^3.5.1",
     "commander": "^2.14.1",
