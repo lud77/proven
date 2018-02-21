@@ -13,5 +13,8 @@
     "commander": "^2.14.1",
     "ramda": "^0.25.0",
     "semver": "^5.5.0"
+  },
+  "bin": {
+    "proven": "./bin/proven.js"
   }
 }
