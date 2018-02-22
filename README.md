@@ -1,3 +1,8 @@
+## Works in progress
+
+Work just started on this module, so don't expect it ot actually work for the time being.
+
+
 # What is `proven`?
 
 `proven` is a CLI tool to enforce module quality requirements for the dependencies in your project. With `proven` you can easily implement a set of rules that third-party modules must withstand to be accepted as dependencies in your projects.
