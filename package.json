@@ -18,5 +18,8 @@
   },
   "bin": {
     "proven": "./bin/proven.js"
+  },
+  "devDependencies": {
+    "eslint": "^4.18.1"
   }
 }
