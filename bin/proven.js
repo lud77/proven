@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const R = require('ramda');
+const moment = require('moment');
 const options = require('commander');
 const semver = require('semver');
 
@@ -15,12 +16,20 @@ options
 	.option('-r, --recursive <depth>', 'Check dependencies recursively up to a certain depth')
 	.parse(process.argv);
 
+const processNpmData = (data, version) => ({
+	freshness: moment.diff(moment(data.time.modified), 'days'),
+	maintainers: data.maintainers.length,
+	versions: data.versions.length,
+	license: data.license,
+	repository: data.repository !== undefined
+});
+
 readTargetPackageJson()
     .then(R.map(R.replace(/[\^|\~]/g, 'v')))
     .then(R.map(semver.valid))
     .then(Object.keys)
     .then(getAllModuleStats)
-    .then(console.log);
+    .then(R.map(processNpmData));
 
 /*
 readFileAsync('.provenignore')
