@@ -1,40 +1,33 @@
-const { promisify } = require('util');
-const Promise = require('bluebird');
-const options = require('commander');
-const fs = require('fs');
-const R = require('ramda');
+#!/usr/bin/env node
 
-const readFileAsync = promisify(fs.readFile);
+const R = require('ramda');
+const options = require('commander');
+const semver = require('semver');
+
+const { getAllModuleStats } = require('../lib/npm');
+const { die, readTargetPackageJson } = require('../lib/proven');
 
 const packageJson = require('../package.json');
 
 options
-	.version(packageJson.version)
+    .version(packageJson.version)
+    .option('-d, --directory <dir>', 'Scan the target directory instead of the CWD')
+	.option('-r, --recursive <depth>', 'Check dependencies recursively up to a certain depth')
 	.parse(process.argv);
 
-const ignore = './.provenignore';
-const package = './package.json';
+readTargetPackageJson()
+    .then(R.map(R.replace(/[\^|\~]/g, 'v')))
+    .then(R.map(semver.valid))
+    .then(Object.keys)
+    .then(getAllModuleStats)
+    .then(console.log);
 
-const parseJson = (stringified) => {
-	try {
-		return JSON.parse(stringified);
-	} catch (e) {
-		return {};
-	};
-};
-
-Promise.map([
-	readFileAsync(ignore, { encoding: 'utf8' }),
-	readFileAsync(package, { encoding: 'utf8' })
-]).then(([ignoreContent, packageContent]) => {
-	const ignoreList = ignoreContent.split('\n');
-	const package = parseJson(packageContent);
-	const dependencies = R.path(['dependencies'], package) || [];
-	const devDependencies = R.path(['devDependencies'], package) || [];
-	const modules = dependencies.concat(devDependencies);
-	return R.reject((item) => ignoreList.includes(item), modules);
-}).then((toCheck) => {
-	console.log('List of modules', toCheck);
-}).catch((e) => {
-	console.log('An error occurred', e);
-});
+/*
+readFileAsync('.provenignore')
+		.then((ignoreStr) => ignoreStr.toString('utf8').split('\n'))
+		.catch(() => {})
+		.then((ignoreList) => {
+		    return Promise.map([readFileAsync(console.log('xyz', ignoreList), 'xxx']);
+		})
+		.catch(() => {});
+*/

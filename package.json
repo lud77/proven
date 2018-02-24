@@ -7,13 +7,22 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Stefano Butera <stefano.butera@nethnic.com> (https://github.com/lud77)",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "bluebird": "^3.5.1",
     "commander": "^2.14.1",
-    "ramda": "^0.25.0"
+    "ramda": "^0.25.0",
+    "request": "^2.83.0",
+    "request-promise": "^4.2.2",
+    "semver": "^5.5.0"
   },
   "bin": {
     "proven": "./bin/proven.js"
+  },
+  "devDependencies": {
+    "eslint": "^4.18.1",
+    "mocha": "^5.0.1",
+    "nock": "^9.1.9",
+    "sinon": "^4.3.0"
   }
 }
