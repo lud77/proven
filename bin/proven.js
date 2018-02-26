@@ -47,8 +47,8 @@ const validateModules = (rules) => R.reduce((acc, value) => acc && value[1], tru
 const validatePackage = (rules) => R.reduce((acc, value) => acc && value[1], true, R.toPairs(rules));
 
 readTargetPackageJson()
-    .then(R.map(R.replace(/[\^|\~]/g, 'v')))
-    .then(R.map(semver.valid))
+    //.then(R.map(R.replace(/[\^|\~]/g, 'v')))
+    //.then(R.map(semver.valid))
     .then(Object.keys)
     .then(getAllModuleStats)
     .then(R.map(processNpmData));
