@@ -9,9 +9,10 @@
 - [x] Implement npm api (registry.npmjs.org)
 - [x] Read list of packages from package.json
 - [x] Collect data from npm
-- [ ] Brainstorm use cases
-- [ ] Collate data from npm
-- [ ] Include dependencies in collation
+- [x] Brainstorm use cases
+- [x] Collate data from npm
+- [x] Implement filter
+- [ ] Implement config file
 - [ ] Implement recursion
 - [ ] Implement ignorefile
 - [ ] Implement target directory
