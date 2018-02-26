@@ -17,6 +17,15 @@ options
 	.option('-r, --recursive <depth>', 'Check dependencies recursively up to a certain depth')
 	.parse(process.argv);
 
+const defaultRule = (data) => ({
+    age: data.age < 300,
+    maintainers: data.maintainers > 1,
+    versions: data.versions > 10,
+    repository: data.repository,
+});
+
+const applyRule = defaultRule;
+
 const processNpmData = (data) => ({
 	age: moment().diff(moment(data.time.modified), 'days'),
 	maintainers: data.maintainers.length,
