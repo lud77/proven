@@ -1,4 +1,4 @@
-# TODO
+# TODO MVP
 
 - [x] Add description
 - [x] Add new readme
@@ -13,6 +13,10 @@
 - [x] Collate data from npm
 - [x] Implement filter
 - [ ] Implement config file
-- [ ] Implement recursion
 - [ ] Implement ignorefile
 - [ ] Implement target directory
+
+# TODO recursion
+
+- [ ] Implement recursion
+- [ ] Implement ignorefile
