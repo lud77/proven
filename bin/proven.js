@@ -47,11 +47,20 @@ const validateModules = (rules) => R.reduce((acc, value) => acc && value[1], tru
 const validatePackage = (rules) => R.reduce((acc, value) => acc && value[1], true, R.toPairs(rules));
 
 readTargetPackageJson()
-    //.then(R.map(R.replace(/[\^|\~]/g, 'v')))
-    //.then(R.map(semver.valid))
-    .then(Object.keys)
+//    .then(R.map(R.replace(/[\^|\~]/g, 'v')))
+//    .then(R.filter(semver.valid))
+    .then(R.toPairs)
     .then(getAllModuleStats)
-    .then(R.map(processNpmData));
+    .then((moduleStats) => Promise.map(moduleStats, ([name, version, stats]) =>
+        stats
+            .then(parseJson)
+            .then(processNpmData)
+            .then(applyRule)
+            .then(validateModules)
+    ))
+    .then(validatePackages)
+    .then(x => console.log(x) || x)
+    .catch((err) => {})
 
 /*
 readFileAsync('.provenignore')
