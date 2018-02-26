@@ -43,6 +43,9 @@ const parseJson = (json) => {
     }
 };
 
+const validateModules = (rules) => R.reduce((acc, value) => acc && value[1], true, R.toPairs(rules));
+const validatePackage = (rules) => R.reduce((acc, value) => acc && value[1], true, R.toPairs(rules));
+
 readTargetPackageJson()
     .then(R.map(R.replace(/[\^|\~]/g, 'v')))
     .then(R.map(semver.valid))
