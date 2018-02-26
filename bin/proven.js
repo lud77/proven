@@ -34,6 +34,15 @@ const processNpmData = (data) => ({
 	repository: data.repository !== undefined
 });
 
+const processModules = (moduleStats) => Promise.map(moduleStats, processModule);
+
+const processModule = ([name, version, stats]) =>
+    stats
+        .then(parseJson)
+        .then(processNpmData)
+        .then(applyRule)
+        .then(validateModules);
+
 const parseJson = (json) => {
     try {
         return JSON.parse(json);
@@ -51,13 +60,7 @@ readTargetPackageJson()
 //    .then(R.filter(semver.valid))
     .then(R.toPairs)
     .then(getAllModuleStats)
-    .then((moduleStats) => Promise.map(moduleStats, ([name, version, stats]) =>
-        stats
-            .then(parseJson)
-            .then(processNpmData)
-            .then(applyRule)
-            .then(validateModules)
-    ))
+    .then(processModules)
     .then(validatePackage)
     .then(x => console.log(x) || x)
     .then((isValid) => {
