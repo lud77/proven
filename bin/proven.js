@@ -58,8 +58,11 @@ readTargetPackageJson()
             .then(applyRule)
             .then(validateModules)
     ))
-    .then(validatePackages)
+    .then(validatePackage)
     .then(x => console.log(x) || x)
+    .then((isValid) => {
+        if (!isValid) process.exit(1);
+    })
     .catch((err) => {})
 
 /*
