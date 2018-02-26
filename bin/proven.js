@@ -17,10 +17,10 @@ options
 	.option('-r, --recursive <depth>', 'Check dependencies recursively up to a certain depth')
 	.parse(process.argv);
 
-const processNpmData = (data, version) => ({
-	freshness: moment.diff(moment(data.time.modified), 'days'),
+const processNpmData = (data) => ({
+	age: moment().diff(moment(data.time.modified), 'days'),
 	maintainers: data.maintainers.length,
-	versions: data.versions.length,
+	versions: R.toPairs(data.versions).length,
 	license: data.license,
 	repository: data.repository !== undefined
 });
