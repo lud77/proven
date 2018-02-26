@@ -34,6 +34,15 @@ const processNpmData = (data) => ({
 	repository: data.repository !== undefined
 });
 
+const parseJson = (json) => {
+    try {
+        return JSON.parse(json);
+    } catch (err) {
+        console.log(err.message);
+        process.exit();
+    }
+};
+
 readTargetPackageJson()
     .then(R.map(R.replace(/[\^|\~]/g, 'v')))
     .then(R.map(semver.valid))
