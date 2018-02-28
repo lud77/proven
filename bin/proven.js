@@ -3,11 +3,11 @@
 const R = require('ramda');
 const moment = require('moment');
 const options = require('commander');
-const semver = require('semver');
+// const semver = require('semver');
 const Promise = require('bluebird');
 
 const { getAllModuleStats } = require('../lib/npm');
-const { die, readTargetPackageJson } = require('../lib/proven');
+const { readTargetPackageJson } = require('../lib/proven');
 
 const packageJson = require('../package.json');
 
