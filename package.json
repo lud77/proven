@@ -4,7 +4,7 @@
   "description": "CLI tool to enforce quality policies on modules in your project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha ./test/*.spec.js"
   },
   "author": "Stefano Butera <stefano.butera@nethnic.com> (https://github.com/lud77)",
   "license": "MIT",
