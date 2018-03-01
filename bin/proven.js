@@ -8,6 +8,7 @@ const Promise = require('bluebird');
 
 const { getAllModuleStats } = require('../lib/npm');
 const { die, readTargetPackageJson } = require('../lib/proven');
+const { parseJson } = require('util');
 
 const packageJson = require('../package.json');
 
@@ -42,15 +43,6 @@ const processModule = ([name, version, stats]) =>
         .then(processNpmData)
         .then(applyRule)
         .then(validateModules);
-
-const parseJson = (json) => {
-    try {
-        return JSON.parse(json);
-    } catch (err) {
-        console.log(err.message);
-        process.exit();
-    }
-};
 
 const validateModules = (rules) => R.reduce((acc, value) => acc && value[1], true, R.toPairs(rules));
 const validatePackage = (rules) => R.reduce((acc, value) => acc && value[1], true, R.toPairs(rules));
