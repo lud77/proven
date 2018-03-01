@@ -13,7 +13,6 @@ const {
     processModules,
     validatePackage
 } = require('../lib/proven');
-const { parseJson } = require('util');
 
 const packageJson = require('../package.json');
 
