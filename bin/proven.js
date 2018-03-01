@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 const R = require('ramda');
-const moment = require('moment');
 const options = require('commander');
 // const semver = require('semver');
 const Promise = require('bluebird');
