@@ -20,3 +20,5 @@
 
 - [ ] Implement recursion
 - [ ] Implement ignorefile
+
+# TODO expand rule-set
