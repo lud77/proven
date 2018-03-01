@@ -3,11 +3,11 @@
 const R = require('ramda');
 const moment = require('moment');
 const options = require('commander');
-const semver = require('semver');
+// const semver = require('semver');
 const Promise = require('bluebird');
 
 const { getAllModuleStats } = require('../lib/npm');
-const { die, readTargetPackageJson } = require('../lib/proven');
+const { readTargetPackageJson } = require('../lib/proven');
 const { parseJson } = require('util');
 
 const packageJson = require('../package.json');
@@ -15,24 +15,24 @@ const packageJson = require('../package.json');
 options
     .version(packageJson.version)
     .option('-d, --directory <dir>', 'Scan the target directory instead of the CWD')
-	.option('-r, --recursive <depth>', 'Check dependencies recursively up to a certain depth')
-	.parse(process.argv);
+    .option('-r, --recursive <depth>', 'Check dependencies recursively up to a certain depth')
+    .parse(process.argv);
 
 const defaultRule = (data) => ({
     age: data.age < 300,
     maintainers: data.maintainers > 1,
     versions: data.versions > 10,
-    repository: data.repository,
+    repository: data.repository
 });
 
 const applyRule = defaultRule;
 
 const processNpmData = (data) => ({
-	age: moment().diff(moment(data.time.modified), 'days'),
-	maintainers: data.maintainers.length,
-	versions: R.toPairs(data.versions).length,
-	license: data.license,
-	repository: data.repository !== undefined
+    age: moment().diff(moment(data.time.modified), 'days'),
+    maintainers: data.maintainers.length,
+    versions: R.toPairs(data.versions).length,
+    license: data.license,
+    repository: data.repository !== undefined
 });
 
 const processModules = (moduleStats) => Promise.map(moduleStats, processModule);

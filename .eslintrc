@@ -9,7 +9,7 @@
     },
     "rules": {
         "comma-dangle": ["error", "never"],
-        "indent": ["error", 2],
+        "indent": ["error", 4],
         "no-cond-assign": ["error", "always"],
         "semi": ["error", "always"]
     }
