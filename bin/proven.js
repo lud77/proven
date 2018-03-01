@@ -7,7 +7,7 @@ const options = require('commander');
 const Promise = require('bluebird');
 
 const { getAllModuleStats } = require('../lib/npm');
-const { readTargetPackageJson } = require('../lib/proven');
+const { readTargetPackageJson, defaultRule } = require('../lib/proven');
 const { parseJson } = require('util');
 
 const packageJson = require('../package.json');
@@ -17,13 +17,6 @@ options
     .option('-d, --directory <dir>', 'Scan the target directory instead of the CWD')
     .option('-r, --recursive <depth>', 'Check dependencies recursively up to a certain depth')
     .parse(process.argv);
-
-const defaultRule = (data) => ({
-    age: data.age < 300,
-    maintainers: data.maintainers > 1,
-    versions: data.versions > 10,
-    repository: data.repository
-});
 
 const applyRule = defaultRule;
 
