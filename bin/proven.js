@@ -3,15 +3,9 @@
 const R = require('ramda');
 const options = require('commander');
 // const semver = require('semver');
-const Promise = require('bluebird');
 
 const { getAllModuleStats } = require('../lib/npm');
-const {
-    readTargetPackageJson,
-    defaultRule,
-    processModules,
-    validatePackage
-} = require('../lib/proven');
+const { readTargetPackageJson, processModules, validatePackage } = require('../lib/proven');
 
 const packageJson = require('../package.json');
 
@@ -21,8 +15,6 @@ options
     .option('-r, --recursive <depth>', 'Check dependencies recursively up to a certain depth')
     .parse(process.argv);
 
-const applyRule = defaultRule;
-
 readTargetPackageJson()
 //    .then(R.map(R.replace(/[\^|\~]/g, 'v')))
 //    .then(R.filter(semver.valid))
@@ -30,11 +22,10 @@ readTargetPackageJson()
     .then(getAllModuleStats)
     .then(processModules)
     .then(validatePackage)
-    .then(x => console.log(x) || x)
     .then((isValid) => {
         if (!isValid) process.exit(1);
     })
-    .catch((err) => {})
+    .catch(() => {});
 
 /*
 readFileAsync('.provenignore')

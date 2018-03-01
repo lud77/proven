@@ -4,7 +4,8 @@
   "description": "CLI tool to enforce quality policies on modules in your project",
   "main": "index.js",
   "scripts": {
-    "test": "mocha ./test"
+    "test": "mocha ./test",
+    "lint": "eslint ./bin && eslint ./lib"
   },
   "author": "Stefano Butera <stefano.butera@nethnic.com> (https://github.com/lud77)",
   "license": "MIT",
