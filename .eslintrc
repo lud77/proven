@@ -11,6 +11,7 @@
         "comma-dangle": ["error", "never"],
         "indent": ["error", 4],
         "no-cond-assign": ["error", "always"],
-        "semi": ["error", "always"]
+        "semi": ["error", "always"],
+        "no-undef": "error"
     }
 }
