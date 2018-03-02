@@ -13,6 +13,8 @@ options
     .version(packageJson.version)
     .option('-d, --directory <dir>', 'Scan the target directory instead of the CWD')
     .option('-r, --recursive <depth>', 'Check dependencies recursively up to a certain depth')
+	.option('--deps <deps>', 'Check dependencies (default true)')
+	.option('--dev-deps <devdeps>', 'Check dev-dependencies (default false)')
     .parse(process.argv);
 
 readTargetPackageJson()
