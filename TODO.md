@@ -12,6 +12,7 @@
 - [x] Brainstorm use cases
 - [x] Collate data from npm
 - [x] Implement filter
+- [ ] Add module license fields to collected data
 - [ ] Implement config file
 - [ ] Implement ignorefile
 - [ ] Implement target directory
