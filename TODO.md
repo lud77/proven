@@ -23,3 +23,5 @@
 - [ ] Implement ignorefile
 
 # TODO expand rule-set
+
+# TODO Implement caching for module info
