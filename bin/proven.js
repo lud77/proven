@@ -2,10 +2,14 @@
 
 const R = require('ramda');
 const options = require('commander');
+const Promise = require('bluebird');
+const fs = require('fs');
 // const semver = require('semver');
 
+const readFileAsync = Promise.promisify(fs.readFile);
+
 const { getAllModuleStats } = require('../lib/npm');
-const { readTargetPackageJson, processModules, validatePackage } = require('../lib/proven');
+const { processTargetPackageJson, processModules, validatePackage } = require('../lib/proven');
 
 const packageJson = require('../package.json');
 
@@ -13,19 +17,25 @@ options
     .version(packageJson.version)
     .option('-d, --directory <dir>', 'Scan the target directory instead of the CWD')
     .option('-r, --recursive <depth>', 'Check dependencies recursively up to a certain depth')
-	.option('--deps <deps>', 'Check dependencies (default true)')
-	.option('--dev-deps <devdeps>', 'Check dev-dependencies (default false)')
+    .option('--deps <deps>', 'Check dependencies (default true)')
+    .option('--dev-deps <devdeps>', 'Check dev-dependencies (default false)')
     .parse(process.argv);
 
-readTargetPackageJson()
+processTargetPackageJson(readFileAsync('./package.json'))
 //    .then(R.map(R.replace(/[\^|\~]/g, 'v')))
 //    .then(R.filter(semver.valid))
     .then(R.toPairs)
     .then(getAllModuleStats)
     .then(processModules)
     .then(validatePackage)
-    .then((isValid) => {
-        if (!isValid) process.exit(1);
+    .then((messages) => {
+        if (messages.length === 0) {
+            console.log('All modules seem to comply with the policy');
+            process.exit(0);
+        };
+
+        console.log(messages.join('\n\n'));
+        process.exit(1);
     })
     .catch(() => {});
 
