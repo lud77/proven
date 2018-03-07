@@ -12,6 +12,7 @@
 - [x] Brainstorm use cases
 - [x] Collate data from npm
 - [x] Implement filter
+- [ ] Add chalk module
 - [ ] Implement config file
 - [ ] Implement ignorefile
 - [ ] Implement target directory
