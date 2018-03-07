@@ -4,6 +4,13 @@ const assert = require('chai').assert;
 
 const proven = require('../../lib/proven');
 
+const defaultLimits = {
+    maxAge: 300,
+    minMaintainers: 2,
+    minVersions: 10,
+    repoRequired: true
+};
+
 const json = {
     dependencies: {
         a: '1'
@@ -37,7 +44,7 @@ describe('Proven lib', () => {
 
     describe('processModules', () => {
         it('should return a list of validation messages grouped by module', (done) => {
-            proven.processModules([moduleStats])
+            proven.processModules(defaultLimits)([moduleStats])
                 .then((messages) => {
                     assert.equal(messages.length, 1);
                     assert.equal(messages[0].length, 3);
