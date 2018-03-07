@@ -13,6 +13,13 @@ const { processTargetPackageJson, processModules, validatePackage } = require('.
 
 const packageJson = require('../package.json');
 
+const defaultLimits = {
+    maxAge: 300,
+    minMaintainers: 2,
+    minVersions: 10,
+    repoRequired: true
+};
+
 options
     .version(packageJson.version)
     .option('-d, --directory <dir>', 'Scan the target directory instead of the CWD')
@@ -26,7 +33,7 @@ processTargetPackageJson(readFileAsync('./package.json'))
 //    .then(R.filter(semver.valid))
     .then(R.toPairs)
     .then(getAllModuleStats)
-    .then(processModules)
+    .then(processModules(defaultLimits))
     .then(validatePackage)
     .then((messages) => {
         if (messages.length === 0) {
