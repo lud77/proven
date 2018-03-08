@@ -44,7 +44,10 @@ processTargetPackageJson(readFileAsync('./package.json'))
         console.log(messages.join('\n\n'));
         process.exit(1);
     })
-    .catch(() => {});
+    .catch((err) => {
+        console.log(err);
+        process.exit(2);
+    });
 
 /*
 readFileAsync('.provenignore')
