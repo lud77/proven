@@ -17,11 +17,16 @@
 - [x] Implement ignorefile
 - [x] Implement target directory
 
-# TODO recursion
+# TODO Recursion
 
 - [ ] Implement recursion
 - [ ] Implement ignorefile
 
-# TODO expand rule-set
+# TODO Expand rule-set
 
 # TODO Implement caching for module info
+
+# TODO Extend information gathering to repository hosts
+
+- [ ] Github
+- [ ] BitBucket
