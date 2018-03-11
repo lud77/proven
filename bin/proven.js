@@ -4,12 +4,21 @@ const R = require('ramda');
 const options = require('commander');
 const Promise = require('bluebird');
 const fs = require('fs');
+const path = require('path');
+
 // const semver = require('semver');
 
 const readFileAsync = Promise.promisify(fs.readFile);
 
 const { getAllModuleStats } = require('../lib/npm');
-const { processTargetPackageJson, processModules, validatePackage } = require('../lib/proven');
+const {
+    processTargetPackageJson,
+    processIgnoreList,
+    removeIgnored,
+    extractLimits,
+    processModules,
+    validatePackage
+} = require('../lib/proven');
 
 const packageJson = require('../package.json');
 
@@ -29,12 +38,25 @@ options
     .option('--dev-deps <devdeps>', 'Check dev-dependencies (default false)')
     .parse(process.argv);
 
-processTargetPackageJson(readFileAsync('./package.json'))
-//    .then(R.map(R.replace(/[\^|\~]/g, 'v')))
-//    .then(R.filter(semver.valid))
-    .then(R.toPairs)
-    .then(getAllModuleStats)
-    .then(processModules(defaultLimits))
+const base = options.dir ? options.dir : './';
+const packageJsonPath = path.join(base, 'package.json');
+const configPath = options.config ? options.config : path.join(base, '.provenrc');
+const ignorePath = path.join(base, '.provenignore');
+
+processTargetPackageJson(readFileAsync(packageJsonPath))
+    .then((dependencies) => [
+        R.toPairs(dependencies),
+        fs.exists(ignorePath) ? processIgnoreList(readFileAsync(ignorePath)) : []
+    ])
+    .then(([dependencyPairs, ignoreList]) => [
+        R.reject(removeIgnored(ignoreList), dependencyPairs),
+        fs.exists(configPath) ? readFileAsync(configPath) : null
+    ])
+    .then(([relevantDependencyPairs, config]) => [
+        getAllModuleStats(relevantDependencyPairs),
+        extractLimits(config, defaultLimits)
+    ])
+    .then(([stats, limits]) => processModules(limits)(stats))
     .then(validatePackage)
     .then((messages) => {
         if (messages.length === 0) {
