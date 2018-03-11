@@ -13,9 +13,9 @@
 - [x] Collate data from npm
 - [x] Implement filter
 - [x] Add chalk module
-- [ ] Implement config file
-- [ ] Implement ignorefile
-- [ ] Implement target directory
+- [x] Implement config file
+- [x] Implement ignorefile
+- [x] Implement target directory
 
 # TODO recursion
 
