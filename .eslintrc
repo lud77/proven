@@ -12,6 +12,7 @@
         "indent": ["error", 4],
         "no-cond-assign": ["error", "always"],
         "semi": ["error", "always"],
-        "no-undef": "error"
+        "no-undef": "error",
+        "no-console": "off"
     }
 }
