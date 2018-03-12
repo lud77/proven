@@ -6,11 +6,10 @@ const Promise = require('bluebird');
 const fs = require('fs');
 const path = require('path');
 
-// const semver = require('semver');
-
 const readFileAsync = Promise.promisify(fs.readFile);
 
 const { getAllModuleStats } = require('../lib/npm');
+
 const {
     processTargetPackageJson,
     processIgnoreList,
@@ -34,8 +33,6 @@ options
     .option('-d, --directory <dir>', 'Scan the target directory instead of the CWD')
     .option('-c, --config <config>', 'Load the specified config file instead of the default one')
     .option('-r, --recursive <depth>', 'Check dependencies recursively up to a certain depth')
-    .option('--deps <deps>', 'Check dependencies (default true)')
-    .option('--dev-deps <devdeps>', 'Check dev-dependencies (default false)')
     .parse(process.argv);
 
 const base = options.dir ? options.dir : './';
@@ -46,17 +43,18 @@ const ignorePath = path.join(base, '.provenignore');
 processTargetPackageJson(readFileAsync(packageJsonPath))
     .then((dependencies) => [
         R.toPairs(dependencies),
-        fs.exists(ignorePath) ? processIgnoreList(readFileAsync(ignorePath)) : []
+        processIgnoreList(readFileAsync(ignorePath))
     ])
     .then(([dependencyPairs, ignoreList]) => [
-        R.reject(removeIgnored(ignoreList), dependencyPairs),
-        fs.exists(configPath) ? readFileAsync(configPath) : null
+        ignoreList
+            .then(removeIgnored)
+            .then((shouldIgnore) => R.reject(shouldIgnore, dependencyPairs))
+            .then(getAllModuleStats),
+        readFileAsync(configPath)
+            .catch(() => false)
+            .then((configFile) => configFile ? extractLimits(configFile) : defaultLimits)
     ])
-    .then(([relevantDependencyPairs, config]) => [
-        getAllModuleStats(relevantDependencyPairs),
-        extractLimits(config, defaultLimits)
-    ])
-    .then(([stats, limits]) => processModules(limits)(stats))
+    .then(([stats, limits]) => limits.then(processModules(stats)))
     .then(validatePackage)
     .then((messages) => {
         if (messages.length === 0) {
@@ -71,13 +69,3 @@ processTargetPackageJson(readFileAsync(packageJsonPath))
         console.log(err);
         process.exit(2);
     });
-
-/*
-readFileAsync('.provenignore')
-		.then((ignoreStr) => ignoreStr.toString('utf8').split('\n'))
-		.catch(() => {})
-		.then((ignoreList) => {
-		    return Promise.map([readFileAsync(console.log('xyz', ignoreList), 'xxx']);
-		})
-		.catch(() => {});
-*/
