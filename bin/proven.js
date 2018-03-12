@@ -33,14 +33,21 @@ options
     .option('-d, --directory <dir>', 'Scan the target directory instead of the CWD')
     .option('-c, --config <config>', 'Load the specified config file instead of the default one')
     .option('-r, --recursive <depth>', 'Check dependencies recursively up to a certain depth')
+    .option('--skip-deps', 'Check dependencies (default true)')
+    .option('--check-dev-deps', 'Check dev-dependencies (default false)')
     .parse(process.argv);
+
+if (options.skipDeps && !options.checkDevDeps) {
+    console.log('Nothing to check!');
+    process.exit(0);
+}
 
 const base = options.dir ? options.dir : './';
 const packageJsonPath = path.join(base, 'package.json');
 const configPath = options.config ? options.config : path.join(base, '.provenrc');
 const ignorePath = path.join(base, '.provenignore');
 
-processTargetPackageJson(readFileAsync(packageJsonPath))
+processTargetPackageJson(readFileAsync(packageJsonPath), options.skipDeps, options.checkDevDeps)
     .then((dependencies) => [
         R.toPairs(dependencies),
         processIgnoreList(readFileAsync(ignorePath))
