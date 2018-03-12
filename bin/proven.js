@@ -48,14 +48,10 @@ const configPath = options.config ? options.config : path.join(base, '.provenrc'
 const ignorePath = path.join(base, '.provenignore');
 
 processTargetPackageJson(readFileAsync(packageJsonPath), options.skipDeps, options.checkDevDeps)
-    .then((dependencies) => [
-        R.toPairs(dependencies),
+    .then((deps) => [
         processIgnoreList(readFileAsync(ignorePath))
-    ])
-    .then(([dependencyPairs, ignoreList]) => [
-        ignoreList
             .then(removeIgnored)
-            .then((shouldIgnore) => R.reject(shouldIgnore, dependencyPairs))
+            .then((shouldIgnore) => R.reject(shouldIgnore, deps))
             .then(getAllModuleStats),
         readFileAsync(configPath)
             .catch(() => false)
