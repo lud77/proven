@@ -33,10 +33,9 @@ const moduleStats = ['module-name', 'module-version', Promise.resolve({
 describe('Proven lib', () => {
     describe('processTargetPackageJson', () => {
         it('should return an object with all the dependencies', (done) => {
-            proven.processTargetPackageJson(Promise.resolve(JSON.stringify(json)))
-                .then((res) => JSON.stringify(res))
-                .then((str) => {
-                    assert.equal(str, '{"a":"1","b":"2"}');
+            proven.processTargetPackageJson(Promise.resolve(JSON.stringify(json)), false, true)
+                .then((res) => {
+                    assert.deepEqual(res, [['a', '1'], ['b', '2']]);
                     done();
                 });
         });
@@ -44,7 +43,7 @@ describe('Proven lib', () => {
 
     describe('processModules', () => {
         it('should return a list of validation messages grouped by module', (done) => {
-            proven.processModules(defaultLimits)([moduleStats])
+            proven.processModules([moduleStats])(defaultLimits)
                 .then((messages) => {
                     assert.equal(messages.length, 1);
                     assert.equal(messages[0].length, 3);
