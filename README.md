@@ -7,7 +7,7 @@ Work just started on this module, so don't expect it ot actually work for the ti
 
 One of the strenghts of the Javascript world is that it gives us access to an infinite ecosystem of modules. This great flexibility of course comes with many risks: your project could become tied to libraries that provide no guarantees, that are maintaned by developers in their spare time, that could become unsupported at any time, that don't have the possiblity to promptly receive fixes when a bug or exploit is found in their code.
 
-Other languages solve this problem by embedding most functionality in the core or by relying on well-know organisations, but if we are to safeguard the plurality that made the Javascript community what it is today, we must find a different solution.
+Other languages solve this problem by embedding most functionality in the core or by relying on well-know organisations, but if we are to safeguard the plurality that made the Javascript community what it is today, we should look for a different solution.
 
 
 # What is `proven`?
