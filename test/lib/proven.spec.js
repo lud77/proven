@@ -35,7 +35,10 @@ describe('Proven lib', () => {
         it('should return an object with all the dependencies', (done) => {
             proven.processTargetPackageJson(Promise.resolve(JSON.stringify(json)), false, true)
                 .then((res) => {
-                    assert.deepEqual(res, [['a', '1'], ['b', '2']]);
+                    assert.deepEqual(res, [
+                        ['a', '1'],
+                        ['b', '2']
+                    ]);
                     done();
                 });
         });
