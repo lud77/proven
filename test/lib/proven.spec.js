@@ -57,4 +57,17 @@ describe('Proven lib', () => {
                 });
         });
     });
+
+    describe('processIgnoreList', () => {
+        it('should return a list of trimmed non null elements', (done) => {
+            const buf = Buffer.from(' test \n test \n ', 'utf8');
+            proven.processIgnoreList(buf)
+                .then((pairs) => {
+                    assert.equal(pairs.length, 2);
+                    assert.equal(pairs[0], 'test');
+                    assert.equal(pairs[1], 'test');
+                    done();
+                });
+        });
+    });
 });
