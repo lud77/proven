@@ -5,6 +5,7 @@ const options = require('commander');
 const Promise = require('bluebird');
 const fs = require('fs');
 const path = require('path');
+const chalk = require('chalk');
 
 const readFileAsync = Promise.promisify(fs.readFile);
 
@@ -49,7 +50,9 @@ const ignorePath = path.join(base, '.provenignore');
 
 processTargetPackageJson(readFileAsync(packageJsonPath), options.skipDeps, options.checkDevDeps)
     .then((deps) => [
-        processIgnoreList(readFileAsync(ignorePath))
+        readFileAsync(ignorePath)
+            .catch(() => false)
+            .then(processIgnoreList)
             .then(removeIgnored)
             .then((shouldIgnore) => R.reject(shouldIgnore, deps))
             .then(getAllModuleStats),
@@ -60,12 +63,14 @@ processTargetPackageJson(readFileAsync(packageJsonPath), options.skipDeps, optio
     .then(([stats, limits]) => limits.then(processModules(stats)))
     .then(validatePackage)
     .then((messages) => {
+        console.log('\n\n');
         if (messages.length === 0) {
-            console.log('All modules seem to comply with the policy');
+            console.log(`${chalk.green('  All modules comply with the policy')}\n\n`);
             process.exit(0);
         }
 
         console.log(messages.join('\n\n'));
+        console.log(`\n\n  ${chalk.red(`${messages.length} failed`)}\n`);
         process.exit(1);
     })
     .catch((err) => {
