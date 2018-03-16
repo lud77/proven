@@ -89,4 +89,19 @@ describe('Proven lib', () => {
             assert.equal(res2.length, 2);
         });
     });
+
+    describe('validatePackage', () => {
+        it('should return an array of messages', () => {
+            const modules = [
+                ['x1', '1', ['$$$a', '$$$b']],
+                ['x2', '1', []],
+                ['x3', '1', ['$$$c', '$$$d', '$$$e']]
+            ];
+
+            const res = proven.validatePackage(modules);
+            assert.equal(res.length, 2);
+            assert.equal(res[0].split('$$$').length, 3);
+            assert.equal(res[1].split('$$$').length, 4);
+        });
+    });
 });
