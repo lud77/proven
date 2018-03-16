@@ -70,4 +70,23 @@ describe('Proven lib', () => {
                 });
         });
     });
+
+    describe('removeIgnored', () => {
+        it('should return a list of pairs not to be ignored', () => {
+            const ignoreList1 = ['a'];
+            const ignoreList2 = ['c', 'd'];
+            const pairs = [
+                ['a', '1'],
+                ['b', '1'],
+                ['c', '1'],
+                ['d', '1']
+            ];
+
+            const res1 = proven.removeIgnored(pairs)(ignoreList1);
+            assert.equal(res1.length, 3);
+
+            const res2 = proven.removeIgnored(pairs)(ignoreList2);
+            assert.equal(res2.length, 2);
+        });
+    });
 });
