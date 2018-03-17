@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-const R = require('ramda');
 const options = require('commander');
 const Promise = require('bluebird');
 const fs = require('fs');
