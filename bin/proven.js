@@ -5,12 +5,12 @@ const options = require('commander');
 const Promise = require('bluebird');
 const fs = require('fs');
 const path = require('path');
-
-// const semver = require('semver');
+const chalk = require('chalk');
 
 const readFileAsync = Promise.promisify(fs.readFile);
 
 const { getAllModuleStats } = require('../lib/npm');
+
 const {
     processTargetPackageJson,
     processIgnoreList,
@@ -34,50 +34,45 @@ options
     .option('-d, --directory <dir>', 'Scan the target directory instead of the CWD')
     .option('-c, --config <config>', 'Load the specified config file instead of the default one')
     .option('-r, --recursive <depth>', 'Check dependencies recursively up to a certain depth')
-    .option('--deps <deps>', 'Check dependencies (default true)')
-    .option('--dev-deps <devdeps>', 'Check dev-dependencies (default false)')
+    .option('--skip-deps', 'Don\'t check dependencies')
+    .option('--check-dev-deps', 'Check dev-dependencies')
     .parse(process.argv);
+
+if (options.skipDeps && !options.checkDevDeps) {
+    console.log('Nothing to check!');
+    process.exit(0);
+}
 
 const base = options.dir ? options.dir : './';
 const packageJsonPath = path.join(base, 'package.json');
 const configPath = options.config ? options.config : path.join(base, '.provenrc');
 const ignorePath = path.join(base, '.provenignore');
 
-processTargetPackageJson(readFileAsync(packageJsonPath))
-    .then((dependencies) => [
-        R.toPairs(dependencies),
-        fs.exists(ignorePath) ? processIgnoreList(readFileAsync(ignorePath)) : []
+processTargetPackageJson(readFileAsync(packageJsonPath), options.skipDeps, options.checkDevDeps)
+    .then((deps) => [
+        readFileAsync(ignorePath)
+            .catch(() => false)
+            .then(processIgnoreList)
+            .then(removeIgnored(deps))
+            .then(getAllModuleStats),
+        readFileAsync(configPath)
+            .catch(() => false)
+            .then((configFile) => configFile ? extractLimits(configFile) : defaultLimits)
     ])
-    .then(([dependencyPairs, ignoreList]) => [
-        R.reject(removeIgnored(ignoreList), dependencyPairs),
-        fs.exists(configPath) ? readFileAsync(configPath) : null
-    ])
-    .then(([relevantDependencyPairs, config]) => [
-        getAllModuleStats(relevantDependencyPairs),
-        extractLimits(config, defaultLimits)
-    ])
-    .then(([stats, limits]) => processModules(limits)(stats))
+    .then(([stats, limits]) => limits.then(processModules(stats)))
     .then(validatePackage)
     .then((messages) => {
+        console.log('\n\n');
         if (messages.length === 0) {
-            console.log('All modules seem to comply with the policy');
+            console.log(`${chalk.green('  All modules comply with the policy')}\n\n`);
             process.exit(0);
         }
 
         console.log(messages.join('\n\n'));
+        console.log(`\n\n  ${chalk.red(`${messages.length} failed`)}\n`);
         process.exit(1);
     })
     .catch((err) => {
         console.log(err);
         process.exit(2);
     });
-
-/*
-readFileAsync('.provenignore')
-		.then((ignoreStr) => ignoreStr.toString('utf8').split('\n'))
-		.catch(() => {})
-		.then((ignoreList) => {
-		    return Promise.map([readFileAsync(console.log('xyz', ignoreList), 'xxx']);
-		})
-		.catch(() => {});
-*/

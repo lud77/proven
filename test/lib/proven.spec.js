@@ -33,10 +33,12 @@ const moduleStats = ['module-name', 'module-version', Promise.resolve({
 describe('Proven lib', () => {
     describe('processTargetPackageJson', () => {
         it('should return an object with all the dependencies', (done) => {
-            proven.processTargetPackageJson(Promise.resolve(JSON.stringify(json)))
-                .then((res) => JSON.stringify(res))
-                .then((str) => {
-                    assert.equal(str, '{"a":"1","b":"2"}');
+            proven.processTargetPackageJson(Promise.resolve(JSON.stringify(json)), false, true)
+                .then((res) => {
+                    assert.deepEqual(res, [
+                        ['a', '1'],
+                        ['b', '2']
+                    ]);
                     done();
                 });
         });
@@ -44,7 +46,7 @@ describe('Proven lib', () => {
 
     describe('processModules', () => {
         it('should return a list of validation messages grouped by module', (done) => {
-            proven.processModules(defaultLimits)([moduleStats])
+            proven.processModules([moduleStats])(defaultLimits)
                 .then((messages) => {
                     assert.equal(messages.length, 1);
                     assert.equal(messages[0].length, 3);
@@ -53,6 +55,53 @@ describe('Proven lib', () => {
                     assert.equal(messages[0][2].length, 2);
                     done();
                 });
+        });
+    });
+
+    describe('processIgnoreList', () => {
+        it('should return a list of trimmed non null elements', (done) => {
+            const buf = Buffer.from(' test \n test \n ', 'utf8');
+            proven.processIgnoreList(buf)
+                .then((pairs) => {
+                    assert.equal(pairs.length, 2);
+                    assert.equal(pairs[0], 'test');
+                    assert.equal(pairs[1], 'test');
+                    done();
+                });
+        });
+    });
+
+    describe('removeIgnored', () => {
+        it('should return a list of pairs not to be ignored', () => {
+            const ignoreList1 = ['a'];
+            const ignoreList2 = ['c', 'd'];
+            const pairs = [
+                ['a', '1'],
+                ['b', '1'],
+                ['c', '1'],
+                ['d', '1']
+            ];
+
+            const res1 = proven.removeIgnored(pairs)(ignoreList1);
+            assert.equal(res1.length, 3);
+
+            const res2 = proven.removeIgnored(pairs)(ignoreList2);
+            assert.equal(res2.length, 2);
+        });
+    });
+
+    describe('validatePackage', () => {
+        it('should return an array of messages', () => {
+            const modules = [
+                ['x1', '1', ['$$$a', '$$$b']],
+                ['x2', '1', []],
+                ['x3', '1', ['$$$c', '$$$d', '$$$e']]
+            ];
+
+            const res = proven.validatePackage(modules);
+            assert.equal(res.length, 2);
+            assert.equal(res[0].split('$$$').length, 3);
+            assert.equal(res[1].split('$$$').length, 4);
         });
     });
 });

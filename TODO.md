@@ -16,17 +16,20 @@
 - [x] Implement config file
 - [x] Implement ignorefile
 - [x] Implement target directory
+- [x] Implement selection for only-dev-dep and only-dep
 
-# TODO Recursion
+# TODO R2
 
+- [ ] Implement check to disallow direct repo links
 - [ ] Implement recursion
-- [ ] Implement ignorefile
+- [ ] Implement ignorefile for recursion
 
-# TODO Expand rule-set
+# TODO R3
 
-# TODO Implement caching for module info
+- [ ] Add Github info gathering
+- [ ] Add BitBucket info gathering
+- [ ] Expand rule-set to include repo-related rules
 
-# TODO Extend information gathering to repository hosts
+# TODO R4
 
-- [ ] Github
-- [ ] BitBucket
+- [ ] Implement caching for module info
