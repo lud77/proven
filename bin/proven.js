@@ -33,6 +33,7 @@ options
     .option('-d, --directory <dir>', 'Scan the target directory instead of the CWD')
     .option('-c, --config <config>', 'Load the specified config file instead of the default one')
     .option('-r, --recursive <depth>', 'Check dependencies recursively up to a certain depth')
+    .option('-s, --silent', 'Produce exit code 0 in case of failure')
     .option('--skip-deps', 'Don\'t check dependencies')
     .option('--check-dev-deps', 'Check dev-dependencies')
     .parse(process.argv);
@@ -41,6 +42,8 @@ if (options.skipDeps && !options.checkDevDeps) {
     console.log('Nothing to check!');
     process.exit(0);
 }
+
+const failCode = options.silent ? 0 : 1;
 
 const base = options.dir ? options.dir : './';
 const packageJsonPath = path.join(base, 'package.json');
@@ -69,7 +72,7 @@ processTargetPackageJson(readFileAsync(packageJsonPath), options.skipDeps, optio
 
         console.log(messages.join('\n\n'));
         console.log(`\n\n  ${chalk.red(`${messages.length} failed`)}\n`);
-        process.exit(1);
+        process.exit(failCode);
     })
     .catch((err) => {
         console.log(err);
