@@ -8,7 +8,8 @@ const defaultLimits = {
     maxAge: 300,
     minMaintainers: 2,
     minVersions: 10,
-    repoRequired: true
+    repoRequired: true,
+    allowedLicenses: 'any'
 };
 
 const json = {
@@ -102,6 +103,12 @@ describe('Proven lib', () => {
             assert.equal(res.length, 2);
             assert.equal(res[0].split('$$$').length, 3);
             assert.equal(res[1].split('$$$').length, 4);
+        });
+    });
+
+    describe('hasValidLicense', () => {
+        it('should allow any license if "any" is specified', () => {
+            assert.isTrue(proven.hasValidLicense('ncdn*-c/ow', 'any'));
         });
     });
 });
