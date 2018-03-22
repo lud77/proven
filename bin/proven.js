@@ -23,9 +23,10 @@ const packageJson = require('../package.json');
 
 const defaultLimits = {
     maxAge: 300,
-    minMaintainers: 2,
-    minVersions: 10,
-    repoRequired: true
+    minMaintainers: 1,
+    minVersions: 5,
+    repoRequired: true,
+    allowedLicenses: 'any spdx'
 };
 
 options
