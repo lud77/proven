@@ -18,7 +18,8 @@
     "ramda": "^0.25.0",
     "request": "^2.83.0",
     "request-promise": "^4.2.2",
-    "semver": "^5.5.0"
+    "semver": "^5.5.0",
+    "spdx-expression-parse": "^3.0.0"
   },
   "bin": {
     "proven": "./bin/proven.js"
