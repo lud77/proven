@@ -114,5 +114,9 @@ describe('Proven lib', () => {
         it('should allow any spdx expression if "any spdx" is specified', () => {
             assert.isTrue(proven.hasValidLicense('(LGPL-2.1 OR BSD-3-Clause AND MIT)', 'any spdx'));
         });
+
+        it('should allow any an invalid spdx expression if "any spdx" is specified', () => {
+            assert.isNotTrue(proven.hasValidLicense('(APACHE 2 OR BSD-3-Clause AND MIT)', 'any spdx'));
+        });
     });
 });
