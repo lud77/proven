@@ -123,5 +123,9 @@ describe('Proven lib', () => {
             assert.isTrue(proven.hasValidLicense('(LGPL-2.1 OR BSD-3-Clause AND MIT)', ['LGPL-2.1']));
             assert.isTrue(proven.hasValidLicense('(LGPL-2.1 OR BSD-3-Clause AND MIT)', ['MIT']));
         });
+
+        it('should disallow a license expression that does not comply with the list of allowed licenses', () => {
+            assert.isNotTrue(proven.hasValidLicense('(LGPL-2.1 OR BSD-3-Clause AND MIT)', ['APACHE-2.0']));
+        });
     });
 });
