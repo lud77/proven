@@ -17,10 +17,19 @@
 - [x] Implement ignorefile
 - [x] Implement target directory
 - [x] Implement selection for only-dev-dep and only-dep
+- [x] Implement license check
+- [ ] Add documentation to README
+
+# SPIKES
+
+- [ ] Check documentation
+- [ ] Coverage on Stack Overflow
 
 # TODO R2
 
+- [ ] Check code-coverage
 - [ ] Implement check to disallow direct repo links
+- [ ] Implement caching for module info
 - [ ] Implement recursion
 - [ ] Implement ignorefile for recursion
 
@@ -29,7 +38,4 @@
 - [ ] Add Github info gathering
 - [ ] Add BitBucket info gathering
 - [ ] Expand rule-set to include repo-related rules
-
-# TODO R4
-
-- [ ] Implement caching for module info
+- [ ] Issues on Github
