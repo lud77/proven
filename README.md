@@ -50,27 +50,32 @@ If the file is specified, all fields must be provided.
 
 ### `maxAge`
 
-(`number`)
+`number`
+
 Specifies the max number of days since last publication.
 
 ### `minMaintainers`
 
-(`number`)
+`number`
+
 Specifies the minimum amount of contributors. Setting a number greater than 1 in this field helps reducing the [Bus Factor](https://en.wikipedia.org/wiki/Bus_factor).
 
 ### `minVersions`
 
-(`number`)
+`number`
+
 Minimum amount of times the project has been updated.
 
 ### `repoRequired`
 
-(`true` or `false`)
+`true` or `false`
+
 Whether the repository field has been provided.
 
 ### `allowedLicenses`
 
-(`array` or `string`)
+`array` or `string`
+
 It can either be:
  - an array with the list of SPDX licenses to be considered valid;
  - a string with the value `any spdx` to accept any valid SPDX expression;
