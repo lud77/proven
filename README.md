@@ -16,12 +16,13 @@ Other languages solve this problem by embedding most functionality in the core o
 
 ## CLI options
 
-By default, only the modules listed in the `dependencies` field of the package.json file will be checked.
-
- - `d, --directory <dir>` Scan the target directory instead of the CWD
- - `-c, --config <config>` Load the specified config file instead of the default one
+ - `d, --directory <dir>` Scan the target directory for a package.json file instead of the CWD
+ - `-c, --config <config>` Load the specified config file instead of the default `.provenrc`
  - `-r, --recursive <depth>` Check dependencies recursively up to a certain depth
  - `-s, --silent` Produce exit code 0 in case of failure
+
+By default, only the modules listed in the `dependencies` field of the package.json file will be checked.
+
  - `--skip-deps` Don't check modules listed in `dependencies`
  - `--check-dev-deps` Check modules listed in `devDependencies`
 
