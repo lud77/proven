@@ -22,7 +22,8 @@
 
 # SPIKES
 
-- [ ] Check documentation
+- [ ] Check documentation >>> hasHomepageField || hasManField || ???
+- [ ] Community >>> hasBugsField
 - [ ] Coverage on Stack Overflow
 
 # TODO R2

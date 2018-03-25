@@ -1,5 +1,5 @@
 {
-  "name": "proven",
+  "name": "proven-cli",
   "version": "1.0.0",
   "description": "CLI tool to enforce quality policies on modules in your project",
   "main": "index.js",
@@ -9,6 +9,8 @@
   },
   "author": "Stefano Butera <stefano.butera@nethnic.com> (https://github.com/lud77)",
   "license": "MIT",
+  "repository": "https://github.com/lud77/proven",
+  "homepage": "https://www.npmjs.com/package/proven-cli",
   "dependencies": {
     "bluebird": "^3.5.1",
     "chai": "^4.1.2",
