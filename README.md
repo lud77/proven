@@ -56,7 +56,7 @@ Specifies the max number of days since last publication.
 ### `minMaintainers`
 
 (`number`)
-Specifies the minimum amount of contributors. Setting a number greater than 1 in this field helps reducing the (Bus Factor)[https://en.wikipedia.org/wiki/Bus_factor].
+Specifies the minimum amount of contributors. Setting a number greater than 1 in this field helps reducing the [Bus Factor](https://en.wikipedia.org/wiki/Bus_factor).
 
 ### `minVersions`
 
