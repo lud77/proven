@@ -1,8 +1,3 @@
-## Works in progress
-
-Work just started on this module, so don't expect it ot actually work for the time being.
-
-
 # Why?
 
 One of the strenghts of the Javascript world is that it gives us access to an infinite ecosystem of modules. This great flexibility of course comes with many risks: your project could become tied to libraries that provide no guarantees, that are maintaned by developers in their spare time, that could become unsupported at any time, that don't have the possiblity to promptly receive fixes when a bug or exploit is found in their code.
