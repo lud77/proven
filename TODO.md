@@ -22,7 +22,7 @@
 
 # SPIKES
 
-- [ ] Check documentation >>> hasHomepageField || hasManField || ???
+- [ ] Check documentation >>> hasHomepageField || hasManField || maybe readthedocs.org as a standard?
 - [ ] Community >>> hasBugsField
 - [ ] Coverage on Stack Overflow
 
