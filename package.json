@@ -11,6 +11,7 @@
   "license": "MIT",
   "repository": "https://github.com/lud77/proven",
   "homepage": "https://www.npmjs.com/package/proven-cli",
+  "bugs": "https://github.com/lud77/proven/issues",
   "dependencies": {
     "bluebird": "^3.5.1",
     "chai": "^4.1.2",
