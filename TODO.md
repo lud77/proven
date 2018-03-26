@@ -19,10 +19,11 @@
 - [x] Implement selection for only-dev-dep and only-dep
 - [x] Implement license check
 - [ ] Add documentation to README
+- [ ] Has documentation? hasManField || (hasHomepageField && ping)
+- [ ] Output which modules are going to be checked
 
 # SPIKES
 
-- [ ] Check documentation >>> hasHomepageField || hasManField || ???
 - [ ] Community >>> hasBugsField
 - [ ] Coverage on Stack Overflow
 
