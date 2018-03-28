@@ -27,7 +27,8 @@ const defaultLimits = {
     minMaintainers: 1,
     minVersions: 5,
     repoRequired: true,
-    allowedLicenses: 'any spdx'
+    allowedLicenses: 'any spdx',
+    docsRequired: false
 };
 
 options
