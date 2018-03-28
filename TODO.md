@@ -18,7 +18,7 @@
 - [x] Implement target directory
 - [x] Implement selection for only-dev-dep and only-dep
 - [x] Implement license check
-- [ ] Add documentation to README
+- [x] Add documentation to README
 - [ ] Has documentation? hasManField || (hasHomepageField && ping)
 - [ ] Output which modules are going to be checked
 
