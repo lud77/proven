@@ -20,7 +20,7 @@
 - [x] Implement license check
 - [x] Add documentation to README
 - [ ] Has documentation? hasManField || (hasHomepageField && ping)
-- [ ] Output which modules are going to be checked
+- [x] Output which modules are going to be checked
 
 # SPIKES
 
