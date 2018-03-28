@@ -19,7 +19,7 @@
 - [x] Implement selection for only-dev-dep and only-dep
 - [x] Implement license check
 - [x] Add documentation to README
-- [ ] Has documentation? hasManField || (hasHomepageField && ping)
+- [x] Has documentation? hasManField || (hasHomepageField && ping)
 - [x] Output which modules are going to be checked
 
 # SPIKES
