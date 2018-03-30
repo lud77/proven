@@ -77,6 +77,12 @@ It can either be:
  - a string with the value `any spdx` to accept any valid SPDX expression;
  - or a string with the value `any` to accept any value.
 
+### `docsRequired`
+
+`true` or `false`
+
+When set to true, requires the project to have either the `homepage` field or the `man` field set.
+
 
 ## .provenignore file
 

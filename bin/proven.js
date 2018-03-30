@@ -5,6 +5,7 @@ const Promise = require('bluebird');
 const fs = require('fs');
 const path = require('path');
 const chalk = require('chalk');
+const R = require('ramda');
 
 const readFileAsync = Promise.promisify(fs.readFile);
 
@@ -26,7 +27,8 @@ const defaultLimits = {
     minMaintainers: 1,
     minVersions: 5,
     repoRequired: true,
-    allowedLicenses: 'any spdx'
+    allowedLicenses: 'any spdx',
+    docsRequired: false
 };
 
 options
@@ -46,7 +48,7 @@ if (options.skipDeps && !options.checkDevDeps) {
 
 const failCode = options.silent ? 0 : 1;
 
-const base = options.dir ? options.dir : './';
+const base = options.dir ? options.dir : process.cwd();
 const packageJsonPath = path.join(base, 'package.json');
 const configPath = options.config ? options.config : path.join(base, '.provenrc');
 const ignorePath = path.join(base, '.provenignore');
@@ -57,6 +59,7 @@ processTargetPackageJson(readFileAsync(packageJsonPath), options.skipDeps, optio
             .catch(() => false)
             .then(processIgnoreList)
             .then(removeIgnored(deps))
+            .then((modules) => console.log(`\nChecking modules:\n${chalk.bold(chalk.white(` - ${R.map((module) => module[0], modules).join('\n - ')}`))}`) || modules)
             .then(getAllModuleStats),
         readFileAsync(configPath)
             .catch(() => false)
@@ -65,7 +68,7 @@ processTargetPackageJson(readFileAsync(packageJsonPath), options.skipDeps, optio
     .then(([stats, limits]) => limits.then(processModules(stats)))
     .then(validatePackage)
     .then((messages) => {
-        console.log('\n\n');
+        console.log('\n');
         if (messages.length === 0) {
             console.log(`${chalk.green('  All modules comply with the policy')}\n\n`);
             process.exit(0);

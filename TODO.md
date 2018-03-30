@@ -19,11 +19,11 @@
 - [x] Implement selection for only-dev-dep and only-dep
 - [x] Implement license check
 - [x] Add documentation to README
-- [ ] Replace validation rules with Joy rules
+- [x] Has documentation? hasManField || (hasHomepageField && ping)
+- [x] Output which modules are going to be checked
 
 # SPIKES
 
-- [ ] Check documentation >>> hasHomepageField || hasManField || maybe readthedocs.org as a standard?
 - [ ] Community >>> hasBugsField
 - [ ] Coverage on Stack Overflow
 
