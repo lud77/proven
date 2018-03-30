@@ -31,9 +31,6 @@
 
 - [ ] Check code-coverage
 - [ ] Implement check to disallow direct repo links
-- [ ] Implement caching for module info
-- [ ] Implement recursion
-- [ ] Implement ignorefile for recursion
 
 # TODO R3
 
@@ -41,3 +38,9 @@
 - [ ] Add BitBucket info gathering
 - [ ] Expand rule-set to include repo-related rules
 - [ ] Issues on Github
+
+# TODO R4
+
+- [ ] Implement caching for module info
+- [ ] Implement recursion
+- [ ] Implement ignorefile for recursion
