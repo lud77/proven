@@ -87,3 +87,9 @@ When set to true, requires the project to have either the `homepage` field or th
 ## .provenignore file
 
 This file can be used to list modules that you want to "allow" regardless of their quality assessment. `proven` will never yield a warning for a module listed in this file.
+
+
+# Resources
+
+ - [Tips for selecting opensource software](http://oss-watch.ac.uk/resources/tips)
+ - [How to evaluate the sustainability of an open source project](https://opensource.com/life/14/1/evaluate-sustainability-open-source-project)

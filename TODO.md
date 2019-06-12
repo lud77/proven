@@ -29,11 +29,14 @@
 
 # TODO R2
 
+- [ ] Implement multiple levels of validation (error, warning, notice, etc...)
+- [ ] Add minDependents rule for reputation
 - [ ] Check code-coverage
 - [ ] Implement check to disallow direct repo links
 
 # TODO R3
 
+- [ ] Implement unique downloads (downloads of this package minus the downloads of the dependant packages)
 - [ ] Add Github info gathering
 - [ ] Add BitBucket info gathering
 - [ ] Expand rule-set to include repo-related rules
