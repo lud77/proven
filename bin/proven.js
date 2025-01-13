@@ -9,7 +9,7 @@ const R = require('ramda');
 
 const readFileAsync = Promise.promisify(fs.readFile);
 
-const { getAllModuleStats } = require('../lib/npm');
+const { getAllModuleStatsAndDownloads } = require('../lib/npm');
 
 const {
     processTargetPackageJson,
@@ -28,7 +28,9 @@ const defaultLimits = {
     minVersions: 5,
     repoRequired: true,
     allowedLicenses: 'any spdx',
-    docsRequired: false
+    docsRequired: false,
+    minDownloads: 100, // -1 to disable
+    period: 'last-month'
 };
 
 options
@@ -48,7 +50,7 @@ if (options.skipDeps && !options.checkDevDeps) {
 
 const failCode = options.silent ? 0 : 1;
 
-const base = options.dir ? options.dir : process.cwd();
+const base = options.directory ? options.directory : process.cwd();
 const packageJsonPath = path.join(base, 'package.json');
 const configPath = options.config ? options.config : path.join(base, '.provenrc');
 const ignorePath = path.join(base, '.provenignore');
@@ -60,12 +62,12 @@ processTargetPackageJson(readFileAsync(packageJsonPath), options.skipDeps, optio
             .then(processIgnoreList)
             .then(removeIgnored(deps))
             .then((modules) => console.log(`\nChecking modules:\n${chalk.bold(chalk.white(` - ${R.map((module) => module[0], modules).join('\n - ')}`))}`) || modules)
-            .then(getAllModuleStats),
+            .then(getAllModuleStatsAndDownloads(defaultLimits.period)),
         readFileAsync(configPath)
             .catch(() => false)
-            .then((configFile) => configFile ? extractLimits(configFile) : defaultLimits)
+            .then((configFile) => configFile ? { ...defaultLimits, ...extractLimits(configFile) } : defaultLimits)
     ])
-    .then(([stats, limits]) => limits.then(processModules(stats)))
+    .then(([statsAndDownloads, limits]) => limits.then(processModules(statsAndDownloads)))
     .then(validatePackage)
     .then((messages) => {
         console.log('\n');
